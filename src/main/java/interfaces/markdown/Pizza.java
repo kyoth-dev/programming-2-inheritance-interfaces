@@ -1,31 +1,13 @@
+
 package interfaces.markdown;
 
 import java.util.List;
 
-/**
- * This class represents pizzas. A pizza has a name and a price as well as a
- * list of toppings. Each topping is represented by a string, which you can
- * assume is always in lower case.
- *
- * Your task is to implement the MarkdownExport interface in this class. The
- * exportMarkdown() method should return a markdown representation of the pizza
- * object. The markdown representation should look something like this:
- *
- *
- * # Hawaiian
- *
- * Toppings:
- * - ham
- * - pineapple
- * - mozarella
- *
- * Price: 10.90
- */
-public class Pizza {
+public class Pizza implements MarkdownExport {
 
-    private final String name;
-    private final double price;
-    private final List<String> toppings;
+    private String name;
+    private double price;
+    private List<String> toppings;
 
     public Pizza(String name, double price, List<String> toppings) {
         this.name = name;
@@ -43,5 +25,22 @@ public class Pizza {
 
     public List<String> getToppings() {
         return toppings;
+    }
+
+    @Override
+    public String exportMarkdown() {
+        StringBuilder result = new StringBuilder();
+
+        result.append("# ").append(name).append("\n\n");
+        result.append("Toppings:\n");
+
+        for (String topping : toppings) {
+            result.append("- ").append(topping).append("\n");
+        }
+
+        result.append("\nPrice: ")
+              .append(String.format(java.util.Locale.US, "%.2f", price));
+
+        return result.toString();
     }
 }
